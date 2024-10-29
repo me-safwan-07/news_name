@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import newsRoutes from './routes/newsRoutes.js';
 
 const app = express();
@@ -25,6 +26,15 @@ mongoose
 
 app.use(express.json());
 
+const corsConfig = {
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use("", cors(corsConfig));
+app.use(cors(corsConfig));
 app.use('/api/news', newsRoutes);
 
 app.listen(PORT, () => {
