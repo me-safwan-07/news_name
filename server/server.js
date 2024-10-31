@@ -1,8 +1,9 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import newsRoutes from './routes/newsRoutes.js';
+// import newsRoutes from './routes/newsRoutes.js';
 import { demodata } from './controllers/demo.js';
+import News from "./models/News.js";
 
 const app = express();
 const PORT = 8000;
@@ -34,22 +35,21 @@ const corsConfig = {
     allowedHeaders: ['Content-Type', 'Authorization'],
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
-import News from "./models/News.js";
+
 
 // Get All Blogs
 const getBlogs = async (req, res, next) => {
   try {
     const blogs = await News.find({}).sort({ updatedAt: -1 });
     res.status(200).json(blogs);
-    res.status(200).json("THis thie news route")
   } catch (err) {
     console.error("Error fetching blogs:", err);
     next(err);
   }
 };
 
-app.use("", cors(corsConfig));
-app.use(cors(corsConfig));
+// app.use("", cors(corsConfig));
+app.use(cors());
 app.use('/api/news', getBlogs);
 app.use('/api/demo', demodata);
 app.listen(PORT, () => {
