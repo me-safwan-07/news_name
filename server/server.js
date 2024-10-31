@@ -27,7 +27,7 @@ app.use('/api/demo', demodata);
 
 // MongoDB Connection
 mongoose
-    .connect('mongodb+srv://mesafwan07:Muha_2005@cluster0.uvnxh.mongodb.net/news-website?retryWrites=true&w=majority&appName=Cluster0')
+    .connect('mongodb+srv://mesafwan07:Muha_2005@cluster0.uvnxh.mongodb.net/news-website?retryWrites=true&w=majority')
     .then(() => console.log('MongoDB connected...'))
     .catch((error) => console.error('Error connecting to MongoDB:', error.message));
 
