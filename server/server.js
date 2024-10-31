@@ -3,7 +3,10 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import newsRoutes from './routes/newsRoutes.js';
 import { demodata } from './controllers/demo.js';
+import dotenv, { config } from 'dotenv'
 
+// Load environment variables from.env file
+dotenv.config();
 const app = express();
 const PORT = 8000;
 
@@ -27,7 +30,7 @@ app.use('/api/demo', demodata);
 
 // MongoDB Connection
 mongoose
-    .connect('mongodb+srv://mesafwan07:Muha_2005@cluster0.uvnxh.mongodb.net/news-website?retryWrites=true&w=majority')
+    .connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB connected...'))
     .catch((error) => console.error('Error connecting to MongoDB:', error.message));
 

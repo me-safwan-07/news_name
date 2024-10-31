@@ -1,6 +1,6 @@
 import express from 'express';
 import { getBlogs } from '../controllers/news.Controller.js';
-import { get } from 'mongoose';
+// import { get } from 'mongoose';
 
 const router = express.Router();
 
