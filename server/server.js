@@ -1,67 +1,47 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-// import newsRoutes from './routes/newsRoutes.js';
+import newsRoutes from './routes/newsRoutes.js';
 import { demodata } from './controllers/demo.js';
-import News from "./models/News.js";
 
 const app = express();
 const PORT = 8000;
 
-app.get('/', (req,res) => {
-    res.send('Hello, World!');
-})
+// Middleware
+app.use(express.json());
+app.use(cors({ 
+    origin: '*', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    credentials: true, 
+    allowedHeaders: ['Content-Type', 'Authorization'], 
+    optionsSuccessStatus: 200 
+}));
 
-app.get('/about', (req, res) => {
-    res.send('This is the About Page');
-})
+// Basic Routes
+app.get('/', (req, res) => res.send('Hello, World!'));
+app.get('/about', (req, res) => res.send('This is the About Page'));
 
+// Use Routes
+app.use('/api/news', newsRoutes);
+app.use('/api/demo', demodata);
 
+// MongoDB Connection
 mongoose
     .connect('mongodb+srv://mesafwan07:Muha_2005@cluster0.uvnxh.mongodb.net/news-website')
-    .then(() => {
-        console.log('MongoDB connected...');
-    })
-    .catch((error) => {
-        console.error('Error connecting to MongoDB:', error.message);
-    });
+    .then(() => console.log('MongoDB connected...'))
+    .catch((error) => console.error('Error connecting to MongoDB:', error.message));
 
-app.use(express.json());
-
-const corsConfig = {
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-
-
-// Get All Blogs
-const getBlogs = async (req, res, next) => {
-  try {
-    const blogs = await News.find({}).sort({ updatedAt: -1 });
-    res.status(200).json(blogs);
-  } catch (err) {
-    console.error("Error fetching blogs:", err);
-    next(err);
-  }
-};
-
-// app.use("", cors(corsConfig));
-app.use(cors());
-app.use('/api/news', getBlogs);
-app.use('/api/demo', demodata);
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
-
+// Error Handling Middleware
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
-    const message = err.message || 'Something went wrong';
     res.status(statusCode).json({
-        success:false,
+        success: false,
         statusCode,
-        message,
+        message: err.message || 'Something went wrong',
     });
+});
+
+// Server Listener
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
