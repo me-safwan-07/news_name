@@ -4,15 +4,19 @@ const NewsSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true
+      required: true,
+      maxlength: 200, // Set a maximum length for title
     },
     content: {
       type: String,
-      required: true
+      required: true,
+      maxlength: 5000, // Optional: set a limit for content length
     },
     category: {
       type: String,
-      default: 'uncategorized'
+      default: 'uncategorized',
+      maxlength: 50,
+      index: true, // Index for quicker searches by category
     },
     image: {
       type: String,
@@ -24,11 +28,12 @@ const NewsSchema = new mongoose.Schema(
     slug: {
       type: String,
       unique: true, // Ensures slug is unique for each blog record
-      required: true
+      required: true,
+      index: true, // Index for quick searches by slug
     },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

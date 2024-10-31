@@ -34,9 +34,22 @@ const corsConfig = {
     allowedHeaders: ['Content-Type', 'Authorization'],
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
+import Blog from "./models/News.js";
+
+// Get All Blogs
+const getBlogs = async (req, res, next) => {
+  try {
+    const blogs = await Blog.find({}).sort({ updatedAt: -1 });
+    res.status(200).json(blogs);
+  } catch (err) {
+    console.error("Error fetching blogs:", err);
+    next(err);
+  }
+};
+
 app.use("", cors(corsConfig));
 app.use(cors(corsConfig));
-app.use('/api/news', newsRoutes);
+app.use('/api/news', getBlogs);
 app.use('/demo', demodata);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
