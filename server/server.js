@@ -50,7 +50,7 @@ const getBlogs = async (req, res, next) => {
 app.use("", cors(corsConfig));
 app.use(cors(corsConfig));
 app.use('/api/news', getBlogs);
-app.use('/demo', demodata);
+app.use('/api/demo', demodata);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
