@@ -1,4 +1,4 @@
-import Blog from "../models/News.js";
+import News from "../models/News.js";
 // import NewsView from "../models/NewsView.js"; // Uncommented import
 // import { errorHandler } from "../utils/errorHandler.js";
 
