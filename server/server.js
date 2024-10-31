@@ -34,7 +34,7 @@ const corsConfig = {
     allowedHeaders: ['Content-Type', 'Authorization'],
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
-import Blog from "./models/News.js";
+import News from "./models/News.js";
 
 // Get All Blogs
 const getBlogs = async (req, res, next) => {
