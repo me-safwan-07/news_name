@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import newsRoutes from './routes/newsRoutes.js';
+import { demodata } from './controllers/demo.js';
 
 const app = express();
 const PORT = 8000;
@@ -36,7 +37,7 @@ const corsConfig = {
 app.use("", cors(corsConfig));
 app.use(cors(corsConfig));
 app.use('/api/news', newsRoutes);
-
+app.use('/demo', demodata);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
